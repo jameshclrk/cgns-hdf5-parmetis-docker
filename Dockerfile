@@ -13,7 +13,7 @@ RUN set -x \
 	&& tar -xf hdf5.tar.gz -C /usr/src/hdf5 --strip-components=1 \
 	&& rm hdf5.tar.gz* \
 	&& cd /usr/src/hdf5 \
-	&& CC=mpicc ./configure --prefix=$TARGET_DIR --enable-parallel \
+	&& CC=mpicc ./configure --prefix=${HDF5_INSTALL_DIR} --enable-parallel \
 	&& make -j"$(nproc)" \
 	&& make install \
     && rm -rf /usr/src/hdf5
