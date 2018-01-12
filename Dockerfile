@@ -16,7 +16,7 @@ RUN set -x \
 	&& CC=mpicc ./configure --prefix=${HDF5_INSTALL_DIR} --enable-parallel \
 	&& make -j"$(nproc)" \
 	&& make install \
-    && rm -rf /usr/src/hdf5
+	&& rm -rf /usr/src/hdf5
 
 RUN set -x \
 	&& curl -fSL "https://github.com/CGNS/CGNS/archive/v$CGNS_VERSION.tar.gz" -o cgns.tar.gz \
@@ -25,10 +25,10 @@ RUN set -x \
 	&& rm cgns.tar.gz* \
 	&& cd /usr/src/cgns \
 	&& mkdir build && cd build \
-    && cmake -DCGNS_ENABLE_HDF5=ON -DHDF5_DIR=$HDF5_INSTALL_DIR -DCMAKE_INSTALL_PREFIX:PATH=${CGNS_INSTALL_DIR} -DHDF5_NEED_MPI=ON .. \
+	&& cmake -DCGNS_ENABLE_HDF5=ON -DHDF5_DIR=${HDF5_INSTALL_DIR} -DCMAKE_INSTALL_PREFIX:PATH=${CGNS_INSTALL_DIR} -DHDF5_NEED_MPI=ON .. \
 	&& make -j"$(nproc)" \
 	&& make install \
-    && rm -rf /usr/src/cgns
+	&& rm -rf /usr/src/cgns
 
 ENV LD_LIBRARY_PATH="${CGNS_INSTALL_DIR}/lib:${HDF5_INSTALL_DIR}/lib:${LD_LIBRARY_PATH}" PATH="${CGNS_INSTALL_DIR}/bin:${HDF5_INSTALL_DIR}/bin:$PATH"
 ENV HDF5_DIR="${HDF5_INSTALL_DIR}"
