@@ -25,7 +25,7 @@ RUN set -x \
 	&& rm cgns.tar.gz* \
 	&& cd /usr/src/cgns \
 	&& mkdir build && cd build \
-	&& HDF5_DIR=${HDF5_INSTALL_DIR} cmake -DCGNS_ENABLE_HDF5=ON -DCMAKE_INSTALL_PREFIX:PATH=${CGNS_INSTALL_DIR} -DHDF5_NEED_MPI=ON .. \
+	&& PATH="${HDF5_INSTALL_DIR}/bin:$PATH" cmake -DCGNS_ENABLE_HDF5=ON -DCMAKE_INSTALL_PREFIX:PATH=${CGNS_INSTALL_DIR} -DHDF5_NEED_MPI=ON .. \
 	&& make -j"$(nproc)" \
 	&& make install \
 	&& rm -rf /usr/src/cgns
